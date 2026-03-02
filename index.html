@@ -7,6 +7,10 @@
     <meta name="description" content="Tanay Shenoy — Business Analytics professional specializing in data science, Python, SQL, and strategic insights.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -921,6 +925,16 @@
                     operate and compete.
                 </p>
             </div>
+            <div class="about-photo reveal reveal-delay-1" style="margin-bottom: 2rem;">
+    <img src="Tanay_Website.jpeg" alt="Tanay Shenoy" style="
+        width: 100%;
+        max-width: 320px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    " id="aboutPhoto">
+</div>
             <div class="info-grid reveal reveal-delay-2">
                 <div class="info-card" data-cursor="📍">
                     <p class="info-card-label">Location</p>
@@ -1295,6 +1309,21 @@
     }
     for (let i = 0; i < 15; i++) spawn();
     setInterval(spawn, 3000);
+     // ===== SCROLL-REACTIVE PHOTO =====
+    const photo = document.getElementById('aboutPhoto');
+    if (photo) {
+        window.addEventListener('scroll', () => {
+            const rect = photo.getBoundingClientRect();
+            const center = rect.top + rect.height / 2;
+            const viewCenter = window.innerHeight / 2;
+            const offset = (center - viewCenter) / window.innerHeight;
+            const rotate = offset * 3;
+            const translateY = offset * -20;
+            const scale = 1 - Math.abs(offset) * 0.05;
+            photo.style.transform = `perspective(800px) rotateX(${rotate}deg) translateY(${translateY}px) scale(${scale})`;
+            photo.style.boxShadow = `0 ${12 + Math.abs(offset) * 20}px ${30 + Math.abs(offset) * 20}px rgba(0,0,0,${0.08 + Math.abs(offset) * 0.04})`;
+        });
+    }
 </script>
 
 </body>
