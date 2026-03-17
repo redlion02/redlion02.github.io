@@ -127,6 +127,39 @@
 
         body.cursor-emoji .cursor-label { opacity: 0; }
 
+        /* iMessage bubble cursor */
+        body.cursor-bubble .cursor-dot { width: 0; height: 0; background: transparent; }
+        body.cursor-bubble .cursor-ring {
+            width: auto; height: auto;
+            border: none; border-radius: 18px;
+            background: #007AFF;
+            color: white;
+            font-family: var(--body);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            display: flex; align-items: center; justify-content: center;
+            white-space: nowrap;
+            animation: bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0.95;
+        }
+        body.cursor-bubble .cursor-ring::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 12px;
+            width: 10px; height: 10px;
+            background: #007AFF;
+            border-radius: 0 0 12px 0;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+        }
+        body.cursor-bubble .cursor-label { opacity: 0; }
+
+        @keyframes bubblePop {
+            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.95; }
+        }
+
         /* ===== FLOATING DATA PARTICLES ===== */
         .particles-container {
             position: fixed;
@@ -1209,6 +1242,21 @@
             label.textContent = '';
         });
     });
+
+    // iMessage bubble on photo hover
+    const aboutPhoto = document.getElementById('aboutPhoto');
+    if (aboutPhoto) {
+        aboutPhoto.addEventListener('mouseenter', () => {
+            document.body.classList.remove('cursor-hover', 'cursor-emoji');
+            document.body.classList.add('cursor-hover', 'cursor-bubble');
+            ring.textContent = 'Hello! 👋';
+            label.textContent = '';
+        });
+        aboutPhoto.addEventListener('mouseleave', () => {
+            document.body.classList.remove('cursor-hover', 'cursor-bubble');
+            ring.textContent = '';
+        });
+    }
 
     // ===== MAGNETIC EFFECT =====
     document.querySelectorAll('[data-magnetic]').forEach(el => {
